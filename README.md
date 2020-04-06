@@ -10,7 +10,7 @@
             4. Enemy3:www.flaticon.com/authors/smashicons
             5. Enemy4: www.flaticon.com/authors/smashicons
             6. Enemy5: www.flaticon.com/authors/smashicons
-        3. Background Artist: 
+        3. Background Artist: www.freepik.com/vectorpouch
 ## Code </>
 
 ### GameProps
