@@ -1,18 +1,17 @@
 import pygame
 import random
-GameProps = {'height': 700, 'width': 1000, 'name': 'Space Invader', 'icon':'icon.png'}
+GameProps = {'height': 600, 'width': 1000, 'name': 'Space Invader', 'icon':'icon.png'}
 pygame.init()
 screen = pygame.display.set_mode((GameProps['width'], GameProps['height']))
 pygame.display.set_caption(GameProps['name'])
 icon = pygame.image.load(GameProps['icon'])
 pygame.display.set_icon(icon)
 font = pygame.font.Font('freesansbold.ttf', 32)
-fontBig = pygame.font.Font('freesansbold.ttf', 32)
+fontBig = pygame.font.Font('freesansbold.ttf', 64)
 running = True
 playing = True
 gameO= False
 backg = pygame.image.load('1876.jpg')
-points=0
 enemiesdata=[{'file':'enemy1.png','points':6},{'file':'enemy2.png','points':5},{'file':'enemy3.png','points':9},{'file':'enemy4.png','points':3},{'file':'enemy5.png','points':7}]
 def isColliding(player, bullet):
     if(abs(player.x-bullet.x<=25) and abs(player.y-bullet.y)<=16):
@@ -20,15 +19,17 @@ def isColliding(player, bullet):
         player.reset()
 
 def showScore(x):
-    text = font.render('scoree:'+ str(x),True,(255,255,255))
+    text = font.render('Score:'+ str(x),True,(255,255,255))
     screen.blit(text,(10,10))
 def gameOver():
     text = fontBig.render('Game Over',True,(255,255,255))
-    text2 = font.render('score:'+ str(ship.points),True,(255,255,255))
+    text2 = font.render('Score:'+ str(ship.points),True,(255,255,255))
     screen.blit(text,(300,300))
     screen.blit(text2,(400,400))
     global playing
     playing=False
+    global gameO
+    gameO= True
 
 
 class Player:
@@ -159,19 +160,20 @@ while running:
         if event.type == pygame.QUIT:
             print('bye bye')
             running = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_l:
-                playing= not playing
-            if playing:
-                if event.key == pygame.K_LEFT:
-                    ship.left()
-                if event.key == pygame.K_RIGHT:
-                    ship.right()
-                if event.key == pygame.K_SPACE:
-                    laser.trigger()
-        if event.type == pygame.KEYUP:
-            if (event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT):
-                ship.stop()
+        if not gameO:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_l:
+                    playing= not playing
+                if playing:
+                    if event.key == pygame.K_LEFT:
+                        ship.left()
+                    if event.key == pygame.K_RIGHT:
+                        ship.right()
+                    if event.key == pygame.K_SPACE:
+                        laser.trigger()
+            if event.type == pygame.KEYUP:
+                if (event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT):
+                    ship.stop()
 
     if playing:
         screen.blit(backg,(0,0))
